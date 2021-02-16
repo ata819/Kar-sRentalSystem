@@ -1,0 +1,14 @@
+
+AVAILABLE		1973 Datsun 240z Coupe
+AVAILABLE		2004 Nissan 350z Coupe
+AVAILABLE		2005 Honda Fit Hatch
+AVAILABLE		2005 Nissan Versa Sedan
+AVAILABLE		2011 Mazda CX9 SUV
+AVAILABLE		2017 Scion FRS Coupe
+AVAILABLE		2020 Toyota Avalon Sedan
+AVAILABLE		2020 Toyota Camry Sedan
+AVAILABLE		2021 Tesla P85D Sedan
+AVAILABLE		2022 Nissan 400z Coupe
+AVAILABLE		2022 Subaru Outback SUV
+UNAVAILABLE		2019 Nissan GTR Coupe
+UNAVAILABLE		2020 Honda Civic Coupe

@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alanta/CLionProjects/CarRentalSystem/main.cpp
+iostream
+-
+cstdio
+-
+cstdlib
+-
+fstream
+-
+zconf.h
+-
+
