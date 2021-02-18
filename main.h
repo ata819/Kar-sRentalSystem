@@ -24,6 +24,8 @@ int removeFileData(const std::string& fileName, const std::string& fileLine, int
 
 void printFileToScreen(const std::string& fileName);
 
+std::string timeAndDate();
+
 void loadingScreen();
 
 void ClearScreen();
@@ -38,9 +40,9 @@ void carListScreen();
 
 void rentOptions();
 
-void invoiceCreate();
+void invoiceCreate(const struct invoiceInfo& temp);
 
-int printInvoice(const std::string& fileName, const std::string& fileLine);
+void invoiceHist();
 
 void rentCarAssignment();
 
@@ -48,7 +50,7 @@ void rentUpdate();
 
 void rentCheck();
 
-int constructHistory(const std::string& fileName, const std::string& fileLine, int whichData);
+int constructHistory(const std::string& fileLine, int whichData);
 
 void printHistory();
 

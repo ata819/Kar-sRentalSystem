@@ -7,3 +7,6 @@
 10	 02/26/2021      02162021054335	Zachary Appleseed   	12345678         2022 Subaru Outback SUV
 10	 02/26/2021      02162021055518	Alan Ta             	12345678         2005 Nissan Versa Sedan
 05	 02/21/2021      02162021055607	Zachary Appleseed   	12345678         2020 Toyota Camry Sedan
+02	 02/19/2021      02172021111643	Alan Ta             	12345678         2004 Nissan 350z Coupe
+
+

@@ -3,6 +3,17 @@
 //
 #include "main.h"
 
+std::string timeAndDate(){
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer, sizeof(buffer), "%m/%d/%Y/ at %I:%M:%S ", timeinfo);
+    std::string str(buffer);
+    return str;
+}
 
 void loadingScreen(){
     std::cout << std::string( 100, '\n' );

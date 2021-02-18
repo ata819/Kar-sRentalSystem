@@ -44,6 +44,8 @@ void addCar(){
             carCollect << Result;
             carCollect << std::endl;
             sortFileData("carCollection.txt", 3);
+            std::string wholeCar = carYear + " " + carMake + " " + carName + " " + carType;
+            constructHistory(wholeCar, 1);
             break;
         }
         case 'n': {
@@ -101,6 +103,7 @@ void removeCar(){
             ClearScreen();
         }
     }while(yesOrNo != 'y');
+    constructHistory(carInfo, 2);
     removeFileData("carCollection.txt", availCarInfo, 3);
 
 }
@@ -144,6 +147,7 @@ void editCar(){
             ClearScreen();
         }
     }while(yesOrNo != 'y');
+    constructHistory(carInfo, 2);
     removeFileData("carCollection.txt", availCarInfo, 3);
     std::cout << "Car to be edited found" << std::endl;
     sleep(2);
@@ -268,6 +272,7 @@ public:
                 std::string Result = firstName + " " + lastName + " " + driverLicense;
                 custInfoStream << Result;
                 custInfoStream << std::endl;
+                constructHistory(Result, 3);
                 sortFileData("customerInfo.txt", 2);
                 break;
             }
@@ -317,6 +322,7 @@ public:
             sleep(4);
         }
         else{
+            constructHistory(fullNameDL, 4);
             std::cout << "Customer was successfully removed from client list" << std::endl;
         }
 
@@ -443,6 +449,7 @@ void invoiceCreate(const struct invoiceInfo& temp){
     int rentAmount = rentDaysToInt * 75;
     invoiceFile << "\t | Total Rental Amount is :--------| $" << rentAmount << std::endl;
     invoiceFile << "\t   ------------------------------------------------------------------------" << std::endl;
+    invoiceFile << std::endl << std::endl;
 
 }
 
@@ -467,47 +474,8 @@ void invoiceHist(){
             }
         }
         titleFile.close();
+        sleep(5);
     }
-}
-
-int printInvoice(const std::string& fileName, const std::string& fileLine){
-    std::string line;
-    unsigned int curLine = 0;
-    std::string nameLocateLine;
-    bool elementFound = false;
-    std::ifstream titleFile(fileName);
-
-    if(titleFile.is_open()){
-        while( getline(titleFile,line)){
-            curLine++;
-            if(line.find(fileLine, 0) != std::string::npos){
-                elementFound = true;
-                nameLocateLine = std::to_string(curLine - 6);
-            }
-        }
-        titleFile.close();
-    }
-    else{
-        std::cout << "UNABLE TO OPEN:" << fileName << std::endl;
-        return -1;
-    }
-
-    if(elementFound){
-        if(titleFile.is_open()){
-            while( getline(titleFile,nameLocateLine)){
-                std::cout << nameLocateLine << std::endl;
-
-            }
-
-        }
-
-        return 0;
-    }
-    else{
-        std::cout << "The name does not exist on file " << std::endl;
-        return -1;
-    }
-
 }
 
 void rentCarAssignment(){
@@ -609,6 +577,8 @@ void rentCarAssignment(){
     }
     invoice.push_back(temp);
     invoiceCreate(temp);
+    std::string carAndCustomer = customerInfo + " " + carInfo;
+    constructHistory(carAndCustomer, 5);
     sleep(4);
     ClearScreen();
 
@@ -654,11 +624,44 @@ void rentUpdate(){
 
 }
 
-int constructHistory(const std::string& fileName, const std::string& fileLine, int whichData){
+int constructHistory(const std::string& fileLine, int whichData){
     /*
      * 1. New Car added and information
-     * 2. Removed Car from
+     * 2. Removed Car from listing
+     * 3. Customer added and information
+     * 4. Removed Customer from listing
+     * 5. Invoice Created
      */
+
+    std::ofstream historyStream;
+    historyStream.open("historyFile.txt", std::ios_base::app);
+    historyStream << "=================================================================="
+                         "======================================" << std::endl;
+    historyStream << std::endl;
+    historyStream << timeAndDate();
+    switch (whichData) {
+        case 1:
+            historyStream << fileLine << "was added to the Vehicle Listings" << std::endl;
+            break;
+        case 2:
+            historyStream << fileLine << "was removed from the Vehicle Listings" << std::endl;
+            break;
+        case 3:
+            historyStream << fileLine << "was added to the Customer Listing" << std::endl;
+            break;
+        case 4:
+            historyStream << fileLine << "was removed from the Customer Listing" << std::endl;
+            break;
+        case 5:
+            historyStream << "Created an Invoice Receipt: "  << std::endl << fileLine << std::endl;
+            break;
+    }
+    historyStream << std::endl;
+    historyStream << "=================================================================="
+                         "======================================" << std::endl;
+    historyStream << std::endl;
+
+
 return 0;
 
 }
@@ -666,24 +669,10 @@ return 0;
 void printHistory(){
     char yesOrNo;
     do{
-        std::string line;
-        std::ifstream titleFile ("historyFile.txt");
         std::cout << "\t\t\t\t\t------------------------------";
-        std::cout << "\n\t\t\t\t\t         HISTORY INFO\n";
+        std::cout << "\n\t\t\t\t\t         HISTORY \n";
         std::cout << "\t\t\t\t\t------------------------------\n\n";
-        if(titleFile.is_open()){
-            while( getline(titleFile,line)){
-                std::cout << "==============================================="
-                             "====================================================" << std::endl;
-                std::cout << line << std::endl;
-                std::cout << "==============================================="
-                             "====================================================" << std::endl;
-            }
-            titleFile.close();
-        }
-        else{
-            std::cout << "UNABLE TO OPEN: History File" << std::endl;
-        }
+        printFileToScreen("historyFile.txt");
         sleep(5);
         std::cout << "Would you like to exit? (y/n)" << std::endl;
         std::cout << ":";
