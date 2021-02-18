@@ -425,7 +425,88 @@ std::string invoiceNum(){
     return str;
 }
 
-void invoiceCreate(){
+void invoiceCreate(const struct invoiceInfo& temp){
+    std::ofstream invoiceFile;
+    invoiceFile.open("invoiceHistory.txt", std::ios_base::app);
+    invoiceFile << "\t\t\t\t\t-------------------------------------------";
+    invoiceFile << "\n\t\t\t\t\t   Car Rental - Customer Invoice \n";
+    invoiceFile << "\t\t\t\t\t-------------------------------------------\n\n";
+    invoiceFile << "\t | Invoice No.    :----------------| " << temp.invoiceNum << std::endl;
+    invoiceFile << "\t | Customer Name  :----------------| " << temp.customerName << std::endl;
+    invoiceFile << "\t | Customer DL#   :----------------| " << temp.custDL << std::endl;
+    invoiceFile << "\t | Car Year       :----------------| " << temp.carYear << std::endl;
+    invoiceFile << "\t | Car Model      :----------------| " << temp.carModel << std::endl;
+    invoiceFile << "\t | Rent Due Date  :----------------| " << temp.rentDue << std::endl;
+    invoiceFile << "\t | Total Rent Days:----------------| " << temp.rentDays << std::endl;
+    invoiceFile << "\t   ------------------------------------------------------------------------" << std::endl;
+    int rentDaysToInt = std::stoi(temp.rentDays);
+    int rentAmount = rentDaysToInt * 75;
+    invoiceFile << "\t | Total Rental Amount is :--------| $" << rentAmount << std::endl;
+    invoiceFile << "\t   ------------------------------------------------------------------------" << std::endl;
+
+}
+
+void invoiceHist(){
+    std::string line;
+    unsigned int curLine = 0;
+    int linePerPage = 15;
+    char nxtOrPrev;
+    std::ifstream titleFile("invoiceHistory.txt");
+    if (titleFile.is_open()) {
+        while (getline(titleFile, line)) {
+            curLine++;
+            std::cout << line << std::endl;
+            if (curLine == linePerPage){
+                std::cout << "Would you like to go the the NEXT PAGE? (n)" << std::endl;
+                std::cout << ":";
+                std::cin >> nxtOrPrev;
+                if(nxtOrPrev == 'n') {
+                    linePerPage += 15;
+                    ClearScreen();
+                }
+            }
+        }
+        titleFile.close();
+    }
+}
+
+int printInvoice(const std::string& fileName, const std::string& fileLine){
+    std::string line;
+    unsigned int curLine = 0;
+    std::string nameLocateLine;
+    bool elementFound = false;
+    std::ifstream titleFile(fileName);
+
+    if(titleFile.is_open()){
+        while( getline(titleFile,line)){
+            curLine++;
+            if(line.find(fileLine, 0) != std::string::npos){
+                elementFound = true;
+                nameLocateLine = std::to_string(curLine - 6);
+            }
+        }
+        titleFile.close();
+    }
+    else{
+        std::cout << "UNABLE TO OPEN:" << fileName << std::endl;
+        return -1;
+    }
+
+    if(elementFound){
+        if(titleFile.is_open()){
+            while( getline(titleFile,nameLocateLine)){
+                std::cout << nameLocateLine << std::endl;
+
+            }
+
+        }
+
+        return 0;
+    }
+    else{
+        std::cout << "The name does not exist on file " << std::endl;
+        return -1;
+    }
 
 }
 
@@ -527,7 +608,7 @@ void rentCarAssignment(){
         std::cout << " DONE " << std::endl;
     }
     invoice.push_back(temp);
-    invoiceCreate();
+    invoiceCreate(temp);
     sleep(4);
     ClearScreen();
 
@@ -578,7 +659,7 @@ int constructHistory(const std::string& fileName, const std::string& fileLine, i
      * 1. New Car added and information
      * 2. Removed Car from
      */
-
+return 0;
 
 }
 
@@ -615,14 +696,15 @@ class mainService{
 public:
     int options(){
         std::cin.clear();
-        int option = 5;
+        int option = 10;
         std::cout << "\t\t\t\t\t\tPlease Select An Option to continue: \n";
         std::cout << "\t\t\t\t\t\t      OPTIONS:";
         std::cout << "\n\t\t\t\t\t\t\t      1: Customer Information";
         std::cout << "\n\t\t\t\t\t\t\t      2: Available Car List";
         std::cout << "\n\t\t\t\t\t\t\t      3: Car Rent";
-        std::cout << "\n\t\t\t\t\t\t\t      4: History";
-        std::cout << "\n\t\t\t\t\t\t\t      5: EXIT\n";
+        std::cout << "\n\t\t\t\t\t\t\t      4: Customer Invoice";
+        std::cout << "\n\t\t\t\t\t\t\t      5: History";
+        std::cout << "\n\t\t\t\t\t\t\t      6: EXIT\n";
         std::cout << "\n\t\t\t\t\t\t\t       :";
         std::cin >> option;
         switch (option) {
@@ -642,9 +724,13 @@ public:
                 break;
             case 4:
                 loadingScreen();
-                printHistory();
+                invoiceHist();
                 break;
             case 5:
+                loadingScreen();
+                printHistory();
+                break;
+            case 6:
                 ClearScreen();
                 std::cout << "\t\t\t\t\t\t\t\tExiting...\n";
                 sleep(5);

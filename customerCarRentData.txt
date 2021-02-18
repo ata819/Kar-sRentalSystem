@@ -1,3 +1,9 @@
 
 10	 02/19/2021         02092021055649		Alan Ta             	12345678         2020 Honda Civic Coupe
 11	 02/20/2021         02092021055735		Richard Hammond     	12345678         2019 Nissan GTR Coupe
+03	 02/19/2021      02162021052512	Alan Ta             	12345678         2021 Tesla P85D Sedan
+10	 02/26/2021      02162021052600	Zachary Appleseed   	12345678         2017 Scion FRS Coupe
+05	 02/21/2021      02162021054234	Alan Ta             	12345678         2005 Honda Fit Hatch
+10	 02/26/2021      02162021054335	Zachary Appleseed   	12345678         2022 Subaru Outback SUV
+10	 02/26/2021      02162021055518	Alan Ta             	12345678         2005 Nissan Versa Sedan
+05	 02/21/2021      02162021055607	Zachary Appleseed   	12345678         2020 Toyota Camry Sedan

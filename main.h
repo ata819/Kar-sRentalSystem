@@ -40,6 +40,8 @@ void rentOptions();
 
 void invoiceCreate();
 
+int printInvoice(const std::string& fileName, const std::string& fileLine);
+
 void rentCarAssignment();
 
 void rentUpdate();
